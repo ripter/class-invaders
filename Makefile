@@ -1,4 +1,4 @@
-.PHONEY: build run test
+.PHONY: all build run test
 
 all: build
 
