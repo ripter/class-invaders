@@ -2,7 +2,7 @@
 
 all: build
 
-build: package.json
+build: node_modules/
 	./node_modules/.bin/browserify src/main.js -o dist/build.js
 
 run: build
@@ -14,7 +14,6 @@ test:
 test-debug:
 	node debug ./node_modules/.bin/mocha -CR nyan
 
-package.json: node_modules/
-
-node_modules/:
+node_modules/: package.json
 	npm install
+	touch $@
