@@ -17,10 +17,19 @@ var state = {
 
     var t = game.add.text(game.world.centerX-300, 0, text, style);
 
-    var mob1 = game.add.sprite(100, 100, 'invaders', 1);
+    // Two ways to create sprites
+    var mob1 = game.add.sprite(100, 100, 'invaders', 0);
+    var mob2 = new Phaser.Sprite(game, 0, 100, 'invaders', 1);
+    // game.add.sprite creates and adds, because we used new Phaser.Sprite we
+		// have to add it ourselves.
+    game.add.existing(mob2);
 
     var mobCompose = new MobCompose(game);
     var mobInherit = new MobInherit(game);
+
+    console.log('mobCompose', 'instanceof MobCompose', mobCompose instanceof MobCompose);
+    console.log('mobInherit', 'instanceof MobInherit', mobInherit instanceof MobInherit);
+	  console.log('mobInherit', 'instanceof Sprite', mobInherit instanceof Phaser.Sprite);
   }
 
   // called every tick
@@ -54,10 +63,12 @@ module.exports = MobCompose;
 // Invader Mob in a inherit style
 
 function MobInherit(game) {
-  this.game = game;
-  this.sprite = game.add.sprite(100, 0, 'invaders', 3);
+  Phaser.Sprite.call(this, game, 100, 0, 'invaders', 3);
+  // because we didn't use the game.add form, we have to add
+	// ourself to the game world.
+  game.add.existing(this);
 }
-MobInherit.prototype = Object.create(Phaser.Sprite);
+MobInherit.prototype = Object.create(Phaser.Sprite.prototype);
 MobInherit.prototype.constructor = MobInherit;
 
 module.exports = MobInherit;

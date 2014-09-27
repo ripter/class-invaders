@@ -8,8 +8,13 @@ build: package.json
 run: build
 	./node_modules/.bin/http-server
 
-test: build
+test:
 	./node_modules/.bin/mocha -CR nyan
 
-package.json: 
+test-debug:
+	node debug ./node_modules/.bin/mocha -CR nyan
+
+package.json: node_modules/
+
+node_modules/:
 	npm install
