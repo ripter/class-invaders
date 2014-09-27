@@ -4,44 +4,33 @@
 //
 // Invader Mob in a composite style
 
-function MobCompose(game) {
+function MobCompose(game, options) {
+  options = options || {};
+  var x = options.x || 0;
+  var y = options.y || 0;
+  var frames = options.frames || [2,3];
+
   this.game = game;
-  this.sprite = game.add.sprite(0, 0, 'invaders', 0);
+  this.sprite = game.add.sprite(0, 0, 'invaders');
 
   // Add animations
   this.animations = this.sprite.animations;
-  this.animations.add('fly', [0, 1], 2, true);
+  this.animations.add('fly', frames, 2, true);
 
   this.animations.play('fly');
 }
 
 module.exports = MobCompose;
 },{}],2:[function(require,module,exports){
-/*global module, require, Phaser */
-
-//
-// Invader Mob in a inherit style
-
-function MobInherit(game) {
-  Phaser.Sprite.call(this, game, 100, 0, 'invaders', 3);
-  // because we didn't use the game.add form, we have to add
-	// ourself to the game world.
-  game.add.existing(this);
-
-  // add animations
-  this.animations.add('fly', [2, 3], 2, true);
-
-  this.animations.play('fly');
-}
-MobInherit.prototype = Object.create(Phaser.Sprite.prototype);
-MobInherit.prototype.constructor = MobInherit;
-
-module.exports = MobInherit;
-},{}],3:[function(require,module,exports){
 /* global require, _, Phaser */
 
-var MobCompose = require('./compose/mob.js');
-var MobInherit = require('./inherit/mob.js');
+/*
+// Inherit version
+var Mob = require('./inherit/mob.js');
+*/
+
+// Compose
+var Mob = require('./compose/mob.js');
 
 var state = {
   // load game assests.
@@ -63,9 +52,11 @@ var state = {
 		// // have to add it ourselves.
     // game.add.existing(mob2);
 
-    var mobCompose = new MobCompose(game);
-    var mobInherit = new MobInherit(game);
-
+    var badguy = new Mob(game, {
+      x: 64
+			, y: 64
+      , frames: [4, 5]
+    });
   }
 
   // called every tick
@@ -80,4 +71,4 @@ var state = {
 };
 
 var game = new Phaser.Game(1136, 640, Phaser.AUTO, 'phaser', state);
-},{"./compose/mob.js":1,"./inherit/mob.js":2}]},{},[3]);
+},{"./compose/mob.js":1}]},{},[2]);

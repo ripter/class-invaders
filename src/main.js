@@ -1,7 +1,12 @@
 /* global require, _, Phaser */
 
-var MobCompose = require('./compose/mob.js');
-var MobInherit = require('./inherit/mob.js');
+/*
+// Inherit version
+var Mob = require('./inherit/mob.js');
+*/
+
+// Compose
+var Mob = require('./compose/mob.js');
 
 var state = {
   // load game assests.
@@ -23,9 +28,11 @@ var state = {
 		// // have to add it ourselves.
     // game.add.existing(mob2);
 
-    var mobCompose = new MobCompose(game);
-    var mobInherit = new MobInherit(game);
-
+    var badguy = new Mob(game, {
+      x: 64
+			, y: 64
+      , frames: [4, 5]
+    });
   }
 
   // called every tick
