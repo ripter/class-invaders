@@ -22,7 +22,7 @@ module.exports = Troop;
 // resets the troop with fresh mobs
 Troop.prototype.reset = function(game) {
   var self = this;
-  var x;
+  var margin = 10;
   var formation = [
     [0, 1]
     , [2, 3]
@@ -32,17 +32,17 @@ Troop.prototype.reset = function(game) {
 
   formation.forEach(function(frames, y) {
     var mob;
+    var x;
 
     for (x=0; x < 6; x++) {
       mob = new Mob(game, {
-        x: x * (80 + 10)
-        , y: y * (64 + 10)
-        , frames: frames
+        frames: frames
       });
 
-			self.add(mob);
+      mob.x = x * (mob.width + margin);
+      mob.y = y * (mob.height + margin);
+
+      self.add(mob);
     }
   });
-
-
-}
+};

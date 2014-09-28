@@ -23,6 +23,22 @@ MobInherit.prototype.constructor = MobInherit;
 
 module.exports = MobInherit;
 },{}],2:[function(require,module,exports){
+/*global module, Phaser */
+'use strict';
+
+function Player(game, options) {
+  options = options || {};
+  var x = options.x || 0;
+  var y = options.y || 0;
+  var frames = options.frames || [0];
+
+  Phaser.Sprite.call(this, game, x, y, 'player');
+}
+Player.prototype = Object.create(Phaser.Sprite.prototype);
+Player.prototype.constructor = Player;
+
+module.exports = Player;
+},{}],3:[function(require,module,exports){
 /*global module, require, Phaser */
 'use strict';
 
@@ -47,7 +63,7 @@ module.exports = Troop;
 // resets the troop with fresh mobs
 Troop.prototype.reset = function(game) {
   var self = this;
-  var x;
+  var margin = 10;
   var formation = [
     [0, 1]
     , [2, 3]
@@ -57,28 +73,28 @@ Troop.prototype.reset = function(game) {
 
   formation.forEach(function(frames, y) {
     var mob;
+    var x;
 
     for (x=0; x < 6; x++) {
       mob = new Mob(game, {
-        x: x * (80 + 10)
-        , y: y * (64 + 10)
-        , frames: frames
+        frames: frames
       });
 
-			self.add(mob);
+      mob.x = x * (mob.width + margin);
+      mob.y = y * (mob.height + margin);
+
+      self.add(mob);
     }
   });
+};
 
-
-}
-
-},{"./mob.js":1}],3:[function(require,module,exports){
+},{"./mob.js":1}],4:[function(require,module,exports){
 /* global require, Phaser */
 'use strict';
 
 // Inherit version
-var Mob = require('./inherit/mob.js');
 var Troop = require('./inherit/troop.js');
+var Player = require('./inherit/player.js');
 
 /*
 // Compose
@@ -89,6 +105,7 @@ var state = {
   // load game assests.
   preload: function(game) {
     game.load.spritesheet('invaders', 'media/invaders-80x64.png', 80, 64);
+    game.load.spritesheet('player', 'media/player.png', 32, 32);
   }
 
   // called after all assests have loaded.
@@ -105,15 +122,18 @@ var state = {
 		// // have to add it ourselves.
     // game.add.existing(mob2);
 
-    // var badguy = new Mob(game, {
-    //   x: 0
-		// 	, y: 0
-    //   , frames: [4, 5]
-    // });
+    var player = new Player(game, {
+      x: 64
+      , y: 600
+      , frames: [0]
+    });
+    game.add.existing(player);
 
     var troop = new Troop(game);
     troop.x = 64;
 	  troop.y = 64;
+
+    window.troop = troop;
   }
 
   // called every tick
@@ -129,4 +149,4 @@ var state = {
 
 /* jshint nonew: false */
 new Phaser.Game(1136, 640, Phaser.AUTO, 'phaser', state);
-},{"./inherit/mob.js":1,"./inherit/troop.js":2}]},{},[3]);
+},{"./inherit/player.js":2,"./inherit/troop.js":3}]},{},[4]);
