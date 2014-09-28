@@ -12,10 +12,6 @@ function MobInherit(game, options) {
 
   Phaser.Sprite.call(this, game, x, y, 'invaders');
 
-  // because we didn't use the game.add form, we have to add
-	// ourself to the game world.
-  //game.add.existing(this);
-
   // add animations
   this.animations.add('fly', frames, 2, true);
 

@@ -21,7 +21,7 @@ var state = {
     var text = 'Class Invaders';
     var style = { font: '65px Arial', fill: '#ff0044', align: 'center' };
 
-    game.add.text(game.world.centerX-300, 0, text, style);
+    game.add.text(game.world.centerX-200, 0, text, style);
 
     // Two ways to create sprites
     // var mob1 = game.add.sprite(100, 100, 'invaders', 4);
@@ -30,16 +30,15 @@ var state = {
 		// // have to add it ourselves.
     // game.add.existing(mob2);
 
-    var badguy = new Mob(game, {
-      x: 0
-			, y: 0
-      , frames: [4, 5]
-    });
+    // var badguy = new Mob(game, {
+    //   x: 0
+		// 	, y: 0
+    //   , frames: [4, 5]
+    // });
 
     var troop = new Troop(game);
     troop.x = 64;
 	  troop.y = 64;
-    troop.add(badguy);
   }
 
   // called every tick

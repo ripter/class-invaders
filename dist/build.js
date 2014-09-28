@@ -13,10 +13,6 @@ function MobInherit(game, options) {
 
   Phaser.Sprite.call(this, game, x, y, 'invaders');
 
-  // because we didn't use the game.add form, we have to add
-	// ourself to the game world.
-  //game.add.existing(this);
-
   // add animations
   this.animations.add('fly', frames, 2, true);
 
@@ -27,23 +23,56 @@ MobInherit.prototype.constructor = MobInherit;
 
 module.exports = MobInherit;
 },{}],2:[function(require,module,exports){
-/*global module, Phaser */
+/*global module, require, Phaser */
 'use strict';
+
+var Mob = require('./mob.js');
 
 /* jshint maxparams: 6 */
 function Troop(game, parent, name, addToStage, enableBody, physicsBodyType) {
   Phaser.Group.call(this, game, parent, name, addToStage, enableBody, physicsBodyType);
 
+  this.reset(game);
+
+  game.add.tween(this).to({
+    x: 610
+  }, 3000).to({
+    x: 0
+  }, 3000).loop().start();
 }
 Troop.prototype = Object.create(Phaser.Group.prototype);
 Troop.prototype.constructor = Troop;
-
-Troop.prototype.generate = function() {
-
-};
-
 module.exports = Troop;
-},{}],3:[function(require,module,exports){
+
+// resets the troop with fresh mobs
+Troop.prototype.reset = function(game) {
+  var self = this;
+  var x;
+  var formation = [
+    [0, 1]
+    , [2, 3]
+    , [4, 5]
+    , [6, 7]
+  ];
+
+  formation.forEach(function(frames, y) {
+    var mob;
+
+    for (x=0; x < 6; x++) {
+      mob = new Mob(game, {
+        x: x * (80 + 10)
+        , y: y * (64 + 10)
+        , frames: frames
+      });
+
+			self.add(mob);
+    }
+  });
+
+
+}
+
+},{"./mob.js":1}],3:[function(require,module,exports){
 /* global require, Phaser */
 'use strict';
 
@@ -67,7 +96,7 @@ var state = {
     var text = 'Class Invaders';
     var style = { font: '65px Arial', fill: '#ff0044', align: 'center' };
 
-    game.add.text(game.world.centerX-300, 0, text, style);
+    game.add.text(game.world.centerX-200, 0, text, style);
 
     // Two ways to create sprites
     // var mob1 = game.add.sprite(100, 100, 'invaders', 4);
@@ -76,16 +105,15 @@ var state = {
 		// // have to add it ourselves.
     // game.add.existing(mob2);
 
-    var badguy = new Mob(game, {
-      x: 0
-			, y: 0
-      , frames: [4, 5]
-    });
+    // var badguy = new Mob(game, {
+    //   x: 0
+		// 	, y: 0
+    //   , frames: [4, 5]
+    // });
 
     var troop = new Troop(game);
     troop.x = 64;
 	  troop.y = 64;
-    troop.add(badguy);
   }
 
   // called every tick
