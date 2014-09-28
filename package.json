@@ -29,6 +29,7 @@
     "should": "^4.0.4"
   },
   "dependencies": {
+    "jshint": "^2.5.6",
     "lodash": "^2.4.1",
     "phaser": "^2.1.1"
   }

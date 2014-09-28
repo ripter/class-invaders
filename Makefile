@@ -14,6 +14,9 @@ test:
 test-debug:
 	node debug ./node_modules/.bin/mocha -CR nyan
 
+lint:
+	./node_modules/.bin/jshint src
+
 node_modules/: package.json
 	npm install
 	touch $@

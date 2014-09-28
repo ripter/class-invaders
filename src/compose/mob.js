@@ -1,4 +1,5 @@
-/*global module, require, Phaser */
+/*global module */
+'use strict';
 
 //
 // Invader Mob in a composite style
@@ -10,7 +11,7 @@ function MobCompose(game, options) {
   var frames = options.frames || [2,3];
 
   this.game = game;
-  this.sprite = game.add.sprite(0, 0, 'invaders');
+  this.sprite = game.add.sprite(x, y, 'invaders');
 
   // Add animations
   this.animations = this.sprite.animations;

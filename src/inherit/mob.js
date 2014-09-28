@@ -1,4 +1,5 @@
-/*global module, require, Phaser */
+/*global module, Phaser */
+'use strict';
 
 //
 // Invader Mob in a inherit style
@@ -13,7 +14,7 @@ function MobInherit(game, options) {
 
   // because we didn't use the game.add form, we have to add
 	// ourself to the game world.
-  game.add.existing(this);
+  //game.add.existing(this);
 
   // add animations
   this.animations.add('fly', frames, 2, true);
