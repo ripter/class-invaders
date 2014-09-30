@@ -6,6 +6,7 @@
 
 /* jshint maxparams: 6 */
 function Bullets(game, parent, name, addToStage) {
+  // all bullets have Arcade physics
   Phaser.Group.call(this, game, parent, name, addToStage, true, Phaser.Physics.ARCADE);
 }
 Bullets.prototype = Object.create(Phaser.Group.prototype);
@@ -24,7 +25,6 @@ Bullets.prototype.fire = function(x, y) {
     bullet.reset(x, y);
   }
 
-  console.log('created', bullet);
   return bullet;
 }
 

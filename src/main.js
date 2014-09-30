@@ -6,9 +6,11 @@ var Troop = require('./inherit/troop.js');
 var Player = require('./inherit/player.js');
 
 /*
-// Compose
+// Compose version
 var Mob = require('./compose/mob.js');
 */
+
+var troop, player;
 
 var state = {
   // load game assests.
@@ -28,14 +30,8 @@ var state = {
 
     game.add.text(game.world.centerX-200, 0, text, style);
 
-    // Two ways to create sprites
-    // var mob1 = game.add.sprite(100, 100, 'invaders', 4);
-    // var mob2 = new Phaser.Sprite(game, 0, 100, 'invaders', 5);
-    // // game.add.sprite creates and adds, because we used new Phaser.Sprite we
-		// // have to add it ourselves.
-    // game.add.existing(mob2);
 
-    var player = new Player(game, {
+    player = new Player(game, {
       x: 64
       , y: 600
       , frames: [0]
@@ -43,7 +39,7 @@ var state = {
     game.add.existing(player);
     window.player = player;
 
-    var troop = new Troop(game);
+    troop = new Troop(game);
     troop.x = 64;
 	  troop.y = 64;
 
@@ -51,8 +47,13 @@ var state = {
   }
 
   // called every tick
-  , update: function() {
+  , update: function(game) {
 
+    game.physics.arcade.overlap(troop, player.bullets, function(mob, bullet) {
+      // kill both!
+      mob.kill();
+			bullet.kill();
+    });
   }
 
   // render any post sprite effects.

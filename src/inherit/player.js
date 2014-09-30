@@ -13,7 +13,7 @@ function Player(game, options) {
   Phaser.Sprite.call(this, game, x, y, 'player');
 
   this.speedMovement = 10;
-  this.speedFire = 200;
+  this.speedFire = 500;
   this.bullets = new Bullets(game);
 
   // we want to use the common cursor keys (Up, Down, Left, Right)
@@ -54,6 +54,7 @@ Player.prototype.fire = function() {
 
   if (time >= delayFire) {
     bullet = this.bullets.fire(x, y);
+    // because bullets have physics, they have a body property
     bullet.body.velocity.y = -200;
 
     this._delayFire = time + speed;

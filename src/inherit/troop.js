@@ -4,8 +4,8 @@
 var Mob = require('./mob.js');
 
 /* jshint maxparams: 6 */
-function Troop(game, parent, name, addToStage, enableBody, physicsBodyType) {
-  Phaser.Group.call(this, game, parent, name, addToStage, enableBody, physicsBodyType);
+function Troop(game, parent, name, addToStage) {
+  Phaser.Group.call(this, game, parent, name, addToStage, true, Phaser.Physics.ARCADE);
 
   this.reset(game);
 

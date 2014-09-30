@@ -7,6 +7,7 @@
 
 /* jshint maxparams: 6 */
 function Bullets(game, parent, name, addToStage) {
+  // all bullets have Arcade physics
   Phaser.Group.call(this, game, parent, name, addToStage, true, Phaser.Physics.ARCADE);
 }
 Bullets.prototype = Object.create(Phaser.Group.prototype);
@@ -25,7 +26,6 @@ Bullets.prototype.fire = function(x, y) {
     bullet.reset(x, y);
   }
 
-  console.log('created', bullet);
   return bullet;
 }
 
@@ -70,7 +70,7 @@ function Player(game, options) {
   Phaser.Sprite.call(this, game, x, y, 'player');
 
   this.speedMovement = 10;
-  this.speedFire = 200;
+  this.speedFire = 500;
   this.bullets = new Bullets(game);
 
   // we want to use the common cursor keys (Up, Down, Left, Right)
@@ -111,6 +111,7 @@ Player.prototype.fire = function() {
 
   if (time >= delayFire) {
     bullet = this.bullets.fire(x, y);
+    // because bullets have physics, they have a body property
     bullet.body.velocity.y = -200;
 
     this._delayFire = time + speed;
@@ -126,8 +127,8 @@ module.exports = Player;
 var Mob = require('./mob.js');
 
 /* jshint maxparams: 6 */
-function Troop(game, parent, name, addToStage, enableBody, physicsBodyType) {
-  Phaser.Group.call(this, game, parent, name, addToStage, enableBody, physicsBodyType);
+function Troop(game, parent, name, addToStage) {
+  Phaser.Group.call(this, game, parent, name, addToStage, true, Phaser.Physics.ARCADE);
 
   this.reset(game);
 
@@ -178,9 +179,11 @@ var Troop = require('./inherit/troop.js');
 var Player = require('./inherit/player.js');
 
 /*
-// Compose
+// Compose version
 var Mob = require('./compose/mob.js');
 */
+
+var troop, player;
 
 var state = {
   // load game assests.
@@ -200,14 +203,8 @@ var state = {
 
     game.add.text(game.world.centerX-200, 0, text, style);
 
-    // Two ways to create sprites
-    // var mob1 = game.add.sprite(100, 100, 'invaders', 4);
-    // var mob2 = new Phaser.Sprite(game, 0, 100, 'invaders', 5);
-    // // game.add.sprite creates and adds, because we used new Phaser.Sprite we
-		// // have to add it ourselves.
-    // game.add.existing(mob2);
 
-    var player = new Player(game, {
+    player = new Player(game, {
       x: 64
       , y: 600
       , frames: [0]
@@ -215,7 +212,7 @@ var state = {
     game.add.existing(player);
     window.player = player;
 
-    var troop = new Troop(game);
+    troop = new Troop(game);
     troop.x = 64;
 	  troop.y = 64;
 
@@ -223,8 +220,13 @@ var state = {
   }
 
   // called every tick
-  , update: function() {
+  , update: function(game) {
 
+    game.physics.arcade.overlap(troop, player.bullets, function(mob, bullet) {
+      // kill both!
+      mob.kill();
+			bullet.kill();
+    });
   }
 
   // render any post sprite effects.
