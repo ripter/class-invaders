@@ -1,5 +1,7 @@
-/*global module, Phaser */
+/*global module, require, Phaser */
 'use strict';
+
+var Bullets = require('./bullets.js');
 
 function Player(game, options) {
   options = options || {};
@@ -12,6 +14,7 @@ function Player(game, options) {
 
   this.speedMovement = 10;
   this.speedFire = 200;
+  this.bullets = new Bullets(game);
 
   // we want to use the common cursor keys (Up, Down, Left, Right)
   this.keys = game.input.keyboard.createCursorKeys();
@@ -45,9 +48,14 @@ Player.prototype.fire = function() {
   var speed = this.speedFire;
   var time = game.time.now;
   var delayFire = this._delayFire || 0;
+  var x = this.x + 13;
+  var y = this.y - 10;
+  var bullet;
 
   if (time >= delayFire) {
-    console.log('Fire!');
+    bullet = this.bullets.fire(x, y);
+    bullet.body.velocity.y = -200;
+
     this._delayFire = time + speed;
   }
 

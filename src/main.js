@@ -15,6 +15,7 @@ var state = {
   preload: function(game) {
     game.load.spritesheet('invaders', 'media/invaders-80x64.png', 80, 64);
     game.load.spritesheet('player', 'media/player.png', 32, 32);
+    game.load.spritesheet('bullet', 'media/bullet.png', 8, 16);
 
     // make repl easier
     window.game = game;

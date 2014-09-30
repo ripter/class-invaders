@@ -3,6 +3,38 @@
 'use strict';
 
 //
+// Bullet group
+
+/* jshint maxparams: 6 */
+function Bullets(game, parent, name, addToStage) {
+  Phaser.Group.call(this, game, parent, name, addToStage, true, Phaser.Physics.ARCADE);
+}
+Bullets.prototype = Object.create(Phaser.Group.prototype);
+Bullets.prototype.constructor = Bullets;
+
+// creates a new bullet at x, y
+Bullets.prototype.fire = function(x, y) {
+  var bullet = this.getFirstDead();
+
+  // where we able to get a dead bullet?
+  if (!bullet) {
+    bullet = this.create(x, y, 'bullet');
+    bullet.outOfBoundsKill = true;
+    bullet.checkWorldBounds = true;
+  } else {
+    bullet.reset(x, y);
+  }
+
+  console.log('created', bullet);
+  return bullet;
+}
+
+module.exports = Bullets;
+},{}],2:[function(require,module,exports){
+/*global module, Phaser */
+'use strict';
+
+//
 // Invader Mob in a inherit style
 
 function MobInherit(game, options) {
@@ -22,9 +54,11 @@ MobInherit.prototype = Object.create(Phaser.Sprite.prototype);
 MobInherit.prototype.constructor = MobInherit;
 
 module.exports = MobInherit;
-},{}],2:[function(require,module,exports){
-/*global module, Phaser */
+},{}],3:[function(require,module,exports){
+/*global module, require, Phaser */
 'use strict';
+
+var Bullets = require('./bullets.js');
 
 function Player(game, options) {
   options = options || {};
@@ -37,6 +71,7 @@ function Player(game, options) {
 
   this.speedMovement = 10;
   this.speedFire = 200;
+  this.bullets = new Bullets(game);
 
   // we want to use the common cursor keys (Up, Down, Left, Right)
   this.keys = game.input.keyboard.createCursorKeys();
@@ -70,16 +105,21 @@ Player.prototype.fire = function() {
   var speed = this.speedFire;
   var time = game.time.now;
   var delayFire = this._delayFire || 0;
+  var x = this.x + 13;
+  var y = this.y - 10;
+  var bullet;
 
   if (time >= delayFire) {
-    console.log('Fire!');
+    bullet = this.bullets.fire(x, y);
+    bullet.body.velocity.y = -200;
+
     this._delayFire = time + speed;
   }
 
 }
 
 module.exports = Player;
-},{}],3:[function(require,module,exports){
+},{"./bullets.js":1}],4:[function(require,module,exports){
 /*global module, require, Phaser */
 'use strict';
 
@@ -129,7 +169,7 @@ Troop.prototype.reset = function(game) {
   });
 };
 
-},{"./mob.js":1}],4:[function(require,module,exports){
+},{"./mob.js":2}],5:[function(require,module,exports){
 /* global require, Phaser */
 'use strict';
 
@@ -147,6 +187,7 @@ var state = {
   preload: function(game) {
     game.load.spritesheet('invaders', 'media/invaders-80x64.png', 80, 64);
     game.load.spritesheet('player', 'media/player.png', 32, 32);
+    game.load.spritesheet('bullet', 'media/bullet.png', 8, 16);
 
     // make repl easier
     window.game = game;
@@ -194,4 +235,4 @@ var state = {
 
 /* jshint nonew: false */
 new Phaser.Game(1136, 640, Phaser.AUTO, 'phaser', state);
-},{"./inherit/player.js":2,"./inherit/troop.js":3}]},{},[4]);
+},{"./inherit/player.js":3,"./inherit/troop.js":4}]},{},[5]);
