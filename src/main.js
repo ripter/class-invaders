@@ -13,7 +13,7 @@ var Mob = require('./compose/mob.js');
 var troop, player;
 
 var state = {
-  // load game assests.
+  // load game assets.
   preload: function(game) {
     game.load.spritesheet('invaders', 'media/invaders-80x64.png', 80, 64);
     game.load.spritesheet('player', 'media/player.png', 32, 32);
@@ -23,7 +23,7 @@ var state = {
     window.game = game;
   }
 
-  // called after all assests have loaded.
+  // called after all assets have loaded.
   , create: function(game) {
     var text = 'Class Invaders';
     var style = { font: '65px Arial', fill: '#ff0044', align: 'center' };
@@ -46,7 +46,7 @@ var state = {
     window.troop = troop;
   }
 
-  // called every tick
+  // Game Loop
   , update: function(game) {
 
     game.physics.arcade.overlap(troop, player.bullets, function(mob, bullet) {
