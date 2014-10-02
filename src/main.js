@@ -4,6 +4,7 @@
 // Inherit version
 var Troop = require('./inherit/troop.js');
 var Player = require('./inherit/player.js');
+var Score = require('./inherit/score.js');
 
 /*
 // Compose version
