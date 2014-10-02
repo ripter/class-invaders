@@ -13,6 +13,7 @@ var Mob = require('./compose/mob.js');
 var troop, player;
 
 var state = {
+
   // load game assets.
   preload: function(game) {
     game.load.spritesheet('invaders', 'media/invaders-80x64.png', 80, 64);
@@ -50,6 +51,7 @@ var state = {
   , update: function(game) {
 
     game.physics.arcade.overlap(troop, player.bullets, function(mob, bullet) {
+
       // kill both!
       mob.kill();
 			bullet.kill();
