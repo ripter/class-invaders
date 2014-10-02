@@ -48,8 +48,9 @@ Player.prototype.fire = function() {
   var speed = this.speedFire;
   var time = game.time.now;
   var delayFire = this._delayFire || 0;
-  var x = this.x + 13;
-  var y = this.y - 10;
+  var bulletWidth = 8;
+  var x = this.x + this.width/2 - bulletWidth/2;
+  var y = this.y - this.height/2;
   var bullet;
 
   if (time >= delayFire) {
