@@ -26,6 +26,9 @@ MobInherit.prototype = Object.create(Phaser.Sprite.prototype);
 MobInherit.prototype.constructor = MobInherit;
 
 MobInherit.prototype.update = function () {
+  if (!this.parent.children.length) {
+    return;
+  }
   if (Math.floor((Math.random() * 1000) + 1) == 5) {
     this.fire();
   }
