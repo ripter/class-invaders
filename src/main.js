@@ -50,7 +50,19 @@ var state = {
 
 	shield = new Shield(game);
 	shield.x = 32;
-	shield.y = 44;
+	shield.y = 550;
+
+	window.shield = shield;
+
+	shield = new Shield(game);
+	shield.x = 500;
+	shield.y = 550;
+
+	window.shield = shield;
+
+	shield = new Shield(game);
+	shield.x = 1000;
+	shield.y = 550;
 
 	window.shield = shield;
   }
