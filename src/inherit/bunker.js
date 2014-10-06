@@ -3,17 +3,17 @@
 
 // Bunker in a inherit style
 
-function Bunker(game, options) {
+function BunkerInherit(game, options) {
   options = options || {};
   var x = options.x || 0;
   var y = options.y || 0;
   var frames = options.frames || [2,3];
 
-  Phaser.Sprite.call(this, game, x,y, 'bunker');
+  Phaser.Sprite.call(this, game, x,y, 'sheild');
 
 }
 
-Bunker.prototype = Object.create(Phaser.Sprite.prototype);
-Bunker.prototype.constructor = BunkerInherit;
+BunkerInherit.prototype = Object.create(Phaser.Sprite.prototype);
+BunkerInherit.prototype.constructor = BunkerInherit;
 
 module.exports = BunkerInherit;

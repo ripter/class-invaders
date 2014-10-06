@@ -34,6 +34,27 @@ module.exports = Bullets;
 /*global module, Phaser */
 'use strict';
 
+// Bunker in a inherit style
+
+function BunkerInherit(game, options) {
+  options = options || {};
+  var x = options.x || 0;
+  var y = options.y || 0;
+  var frames = options.frames || [2,3];
+
+  Phaser.Sprite.call(this, game, x,y, 'sheild');
+
+}
+
+BunkerInherit.prototype = Object.create(Phaser.Sprite.prototype);
+BunkerInherit.prototype.constructor = BunkerInherit;
+
+module.exports = BunkerInherit;
+
+},{}],3:[function(require,module,exports){
+/*global module, Phaser */
+'use strict';
+
 //
 // Invader Mob in a inherit style
 
@@ -54,7 +75,7 @@ MobInherit.prototype = Object.create(Phaser.Sprite.prototype);
 MobInherit.prototype.constructor = MobInherit;
 
 module.exports = MobInherit;
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /*global module, require, Phaser */
 'use strict';
 
@@ -120,7 +141,52 @@ Player.prototype.fire = function() {
 }
 
 module.exports = Player;
-},{"./bullets.js":1}],4:[function(require,module,exports){
+},{"./bullets.js":1}],5:[function(require,module,exports){
+/*global module, require, Phaser */
+'use strict';
+
+var Bunker = require('./bunker.js');
+
+/* jshint maxparams: 6 */
+function Sheild(game, parent, name, addToStage) {
+  Phaser.Group.call(this, game, parent, name, addToStage, true, Phaser.Physics.ARCADE);
+
+  this.reset(game);
+}
+
+Sheild.prototype = Object.create(Phaser.Group.prototype);
+Sheild.prototype.constructor = Sheild;
+module.exports = Sheild;
+
+// resets the sheild with fresh pices
+Sheild.prototype.reset = function(game) {
+  var self = this;
+  var margin = 10;
+  var formation = [
+    [0, 1]
+    , [2, 3]
+    , [4, 5]
+    , [6, 7]
+  ];
+
+  formation.forEach(function(frames, y) {
+    var bunker;
+    var x;
+
+    for (x=0; x < 6; x++) {
+      bunker = new bunker(game, {
+        frames: frames
+      });
+
+      bunker.x = x * (bunker.width + margin);
+      bunker.y = y * (bunker.height + margin);
+
+      self.add(bunker);
+    }
+  });
+};
+
+},{"./bunker.js":2}],6:[function(require,module,exports){
 /*global module, require, Phaser */
 'use strict';
 
@@ -170,26 +236,28 @@ Troop.prototype.reset = function(game) {
   });
 };
 
-},{"./mob.js":2}],5:[function(require,module,exports){
+},{"./mob.js":3}],7:[function(require,module,exports){
 /* global require, Phaser */
 'use strict';
 
 // Inherit version
 var Troop = require('./inherit/troop.js');
 var Player = require('./inherit/player.js');
+var Sheild = require('./inherit/sheild.js');
 
 /*
 // Compose version
 var Mob = require('./compose/mob.js');
 */
 
-var troop, player;
+var troop, player, sheild;
 
 var state = {
 
   // load game assets.
   preload: function(game) {
     game.load.spritesheet('invaders', 'media/invaders-80x64.png', 80, 64);
+    game.load.spritesheet('sheild', 'media/sheild.png', 32, 32);
     game.load.spritesheet('player', 'media/player.png', 32, 32);
     game.load.spritesheet('bullet', 'media/bullet.png', 8, 16);
 
@@ -218,6 +286,12 @@ var state = {
 	  troop.y = 64;
 
     window.troop = troop;
+
+	sheild = new Sheild(game);
+	sheild.x = 32;
+	sheild.y = 44;
+
+	window.sheild = sheild;
   }
 
   // Game Loop
@@ -240,4 +314,4 @@ var state = {
 /* jshint nonew: false */
 new Phaser.Game(1136, 640, Phaser.AUTO, 'phaser', state);
 
-},{"./inherit/player.js":3,"./inherit/troop.js":4}]},{},[5]);
+},{"./inherit/player.js":4,"./inherit/sheild.js":5,"./inherit/troop.js":6}]},{},[7]);
