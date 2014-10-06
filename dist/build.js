@@ -174,6 +174,9 @@ Troop.prototype.reset = function(game) {
 /* global require, Phaser */
 'use strict';
 
+// aditional game states
+var startState = require('./states/start.js');
+
 // Inherit version
 var Troop = require('./inherit/troop.js');
 var Player = require('./inherit/player.js');
@@ -236,5 +239,29 @@ var state = {
 };
 
 /* jshint nonew: false */
-new Phaser.Game(1136, 640, Phaser.AUTO, 'phaser', state);
-},{"./inherit/player.js":3,"./inherit/troop.js":4}]},{},[5]);
+//new Phaser.Game(1136, 640, Phaser.AUTO, 'phaser', state);
+var game = new Phaser.Game(1136, 640, Phaser.AUTO, 'phaser');
+
+// Add the states
+game.state.add('start', startState);
+game.state.add('game', state);
+
+// run the start state
+game.state.start('start');
+window.game = game;
+},{"./inherit/player.js":3,"./inherit/troop.js":4,"./states/start.js":6}],6:[function(require,module,exports){
+/* global module, require, Phaser */
+'use strict';
+
+var state = {
+  preload: function(game) {
+    game.load.image('galaxy', 'media/galaxy.jpg');
+  }
+
+  , create: function(game) {
+    game.add.image(0, 0, 'galaxy');
+  }
+};
+
+module.exports = state;
+},{}]},{},[5]);

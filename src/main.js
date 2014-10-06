@@ -1,6 +1,9 @@
 /* global require, Phaser */
 'use strict';
 
+// aditional game states
+var startState = require('./states/start.js');
+
 // Inherit version
 var Troop = require('./inherit/troop.js');
 var Player = require('./inherit/player.js');
@@ -63,4 +66,13 @@ var state = {
 };
 
 /* jshint nonew: false */
-new Phaser.Game(1136, 640, Phaser.AUTO, 'phaser', state);
+//new Phaser.Game(1136, 640, Phaser.AUTO, 'phaser', state);
+var game = new Phaser.Game(1136, 640, Phaser.AUTO, 'phaser');
+
+// Add the states
+game.state.add('start', startState);
+game.state.add('game', state);
+
+// run the start state
+game.state.start('start');
+window.game = game;
