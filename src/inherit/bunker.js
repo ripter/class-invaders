@@ -9,7 +9,7 @@ function BunkerInherit(game, options) {
   var y = options.y || 0;
   var frames = options.frames || [2,3];
 
-  Phaser.Sprite.call(this, game, x,y, 'sheild');
+  Phaser.Sprite.call(this, game, x,y, 'shield');
 
 }
 
