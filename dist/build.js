@@ -176,7 +176,7 @@ Shield.prototype.reset = function(game) {
       });
 
       bunker.x = x * (bunker.width);
-      bunker.y = y * (bunker.height + margin);
+      bunker.y = y * (bunker.height);
 
       self.add(bunker);
    }
@@ -210,9 +210,10 @@ Troop.prototype.reset = function(game) {
   var self = this;
   var margin = 10;
   var formation = [
-    [0]
-    , [7]
-    , [13]
+    [0, 1]
+    , [2, 3]
+    , [4, 5]
+    , [6, 7]
   ];
 
   formation.forEach(function(frames, y) {
@@ -253,7 +254,7 @@ var state = {
   // load game assets.
   preload: function(game) {
     game.load.spritesheet('invaders', 'media/invaders-80x64.png', 80, 64);
-    game.load.spritesheet('shield', 'media/shield.png', 32, 32);
+    game.load.spritesheet('shield', 'media/shield.png', 32, 44);
     game.load.spritesheet('player', 'media/player.png', 32, 32);
     game.load.spritesheet('bullet', 'media/bullet.png', 8, 16);
 

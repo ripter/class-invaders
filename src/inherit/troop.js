@@ -24,9 +24,10 @@ Troop.prototype.reset = function(game) {
   var self = this;
   var margin = 10;
   var formation = [
-    [0]
-    , [7]
-    , [13]
+    [0, 1]
+    , [2, 3]
+    , [4, 5]
+    , [6, 7]
   ];
 
   formation.forEach(function(frames, y) {

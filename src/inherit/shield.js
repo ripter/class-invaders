@@ -32,7 +32,7 @@ Shield.prototype.reset = function(game) {
       });
 
       bunker.x = x * (bunker.width);
-      bunker.y = y * (bunker.height + margin);
+      bunker.y = y * (bunker.height);
 
       self.add(bunker);
    }
