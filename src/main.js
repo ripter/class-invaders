@@ -4,21 +4,21 @@
 // Inherit version
 var Troop = require('./inherit/troop.js');
 var Player = require('./inherit/player.js');
-var Sheild = require('./inherit/sheild.js');
+var Shield = require('./inherit/shield.js');
 
 /*
 // Compose version
 var Mob = require('./compose/mob.js');
 */
 
-var troop, player, sheild;
+var troop, player, shield;
 
 var state = {
 
   // load game assets.
   preload: function(game) {
     game.load.spritesheet('invaders', 'media/invaders-80x64.png', 80, 64);
-    game.load.spritesheet('sheild', 'media/sheild.png', 32, 32);
+    game.load.spritesheet('shield', 'media/shield.png', 32, 32);
     game.load.spritesheet('player', 'media/player.png', 32, 32);
     game.load.spritesheet('bullet', 'media/bullet.png', 8, 16);
 
@@ -48,11 +48,11 @@ var state = {
 
     window.troop = troop;
 
-	sheild = new Sheild(game);
-	sheild.x = 32;
-	sheild.y = 44;
-
-	window.sheild = sheild;
+	shield = new Shield(game);
+	shield.x = 32;
+	shield.y = 44;
+	game.add.sprite(shield);
+	window.shield = shield;
   }
 
   // Game Loop

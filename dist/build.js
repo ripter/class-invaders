@@ -148,18 +148,18 @@ module.exports = Player;
 var Bunker = require('./bunker.js');
 
 /* jshint maxparams: 6 */
-function Sheild(game, parent, name, addToStage) {
+function Shield(game, parent, name, addToStage) {
   Phaser.Group.call(this, game, parent, name, addToStage, true, Phaser.Physics.ARCADE);
 
   this.reset(game);
 }
 
-Sheild.prototype = Object.create(Phaser.Group.prototype);
-Sheild.prototype.constructor = Sheild;
-module.exports = Sheild;
+Shield.prototype = Object.create(Phaser.Group.prototype);
+Shield.prototype.constructor = Shield;
+module.exports = Shield;
 
 // resets the sheild with fresh pices
-Sheild.prototype.reset = function(game) {
+Shield.prototype.reset = function(game) {
   var self = this;
   var margin = 10;
   var formation = [
@@ -243,21 +243,21 @@ Troop.prototype.reset = function(game) {
 // Inherit version
 var Troop = require('./inherit/troop.js');
 var Player = require('./inherit/player.js');
-var Sheild = require('./inherit/sheild.js');
+var Shield = require('./inherit/shield.js');
 
 /*
 // Compose version
 var Mob = require('./compose/mob.js');
 */
 
-var troop, player, sheild;
+var troop, player, shield;
 
 var state = {
 
   // load game assets.
   preload: function(game) {
     game.load.spritesheet('invaders', 'media/invaders-80x64.png', 80, 64);
-    game.load.spritesheet('sheild', 'media/sheild.png', 32, 32);
+    game.load.spritesheet('shield', 'media/shield.png', 32, 32);
     game.load.spritesheet('player', 'media/player.png', 32, 32);
     game.load.spritesheet('bullet', 'media/bullet.png', 8, 16);
 
@@ -287,11 +287,11 @@ var state = {
 
     window.troop = troop;
 
-	sheild = new Sheild(game);
-	sheild.x = 32;
-	sheild.y = 44;
-
-	window.sheild = sheild;
+	shield = new Shield(game);
+	shield.x = 32;
+	shield.y = 44;
+	game.add.sprite(shield);
+	window.shield = shield;
   }
 
   // Game Loop
@@ -314,4 +314,4 @@ var state = {
 /* jshint nonew: false */
 new Phaser.Game(1136, 640, Phaser.AUTO, 'phaser', state);
 
-},{"./inherit/player.js":4,"./inherit/sheild.js":5,"./inherit/troop.js":6}]},{},[7]);
+},{"./inherit/player.js":4,"./inherit/shield.js":5,"./inherit/troop.js":6}]},{},[7]);
