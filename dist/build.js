@@ -40,7 +40,7 @@ function BunkerInherit(game, options) {
   options = options || {};
   var x = options.x || 0;
   var y = options.y || 0;
-  var frames = options.frames || [2,3];
+  var frames = options.frames || [0,6,12];
 
   Phaser.Sprite.call(this, game, x,y, 'shield');
 
@@ -163,7 +163,7 @@ Shield.prototype.reset = function(game) {
   var self = this;
   var margin = 10;
   var formation = [
-    [0, 1]
+    [0,6,12]
   ];
 
   formation.forEach(function(frames, y) {
@@ -286,7 +286,7 @@ var state = {
 	shield = new Shield(game);
 	shield.x = 32;
 	shield.y = 44;
-	game.add.sprite(0,0,'shield');
+
 	window.shield = shield;
   }
 

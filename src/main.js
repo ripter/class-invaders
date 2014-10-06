@@ -51,7 +51,7 @@ var state = {
 	shield = new Shield(game);
 	shield.x = 32;
 	shield.y = 44;
-	game.add.sprite(0,0,'shield');
+
 	window.shield = shield;
   }
 

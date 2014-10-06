@@ -19,7 +19,7 @@ Shield.prototype.reset = function(game) {
   var self = this;
   var margin = 10;
   var formation = [
-    [0, 1]
+    [0,6,12]
   ];
 
   formation.forEach(function(frames, y) {
