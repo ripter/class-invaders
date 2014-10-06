@@ -8,6 +8,7 @@ node_modules
 # Users Environment Variables
 .lock-wscript
 dist/buid.js
+/dist/buid.js
 
 #############################
 # App
