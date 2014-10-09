@@ -1,4 +1,12 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+function CoreyInvader(game){
+	Phaser.Sprite.call(this, game, 10, 10, 'piskelInvader', [0]);
+}
+CoreyInvader.prototype = Object.create(Phaser.Sprite.prototype);
+CoreyInvader.prototype.constructor = CoreyInvader;
+
+module.exports = CoreyInvader;
+},{}],2:[function(require,module,exports){
 /*global module, Phaser */
 'use strict';
 
@@ -30,7 +38,7 @@ Bullets.prototype.fire = function(x, y) {
 }
 
 module.exports = Bullets;
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 /*global module, Phaser */
 'use strict';
 
@@ -54,7 +62,7 @@ MobInherit.prototype = Object.create(Phaser.Sprite.prototype);
 MobInherit.prototype.constructor = MobInherit;
 
 module.exports = MobInherit;
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /*global module, require, Phaser */
 'use strict';
 
@@ -120,7 +128,7 @@ Player.prototype.fire = function() {
 }
 
 module.exports = Player;
-},{"./bullets.js":1}],4:[function(require,module,exports){
+},{"./bullets.js":2}],5:[function(require,module,exports){
 /*global module, require, Phaser */
 'use strict';
 
@@ -170,13 +178,14 @@ Troop.prototype.reset = function(game) {
   });
 };
 
-},{"./mob.js":2}],5:[function(require,module,exports){
+},{"./mob.js":3}],6:[function(require,module,exports){
 /* global require, Phaser */
 'use strict';
 
 // Inherit version
 var Troop = require('./inherit/troop.js');
 var Player = require('./inherit/player.js');
+var CoreyInvader = require('./corey_invader.js');
 
 /*
 // Compose version
@@ -184,6 +193,7 @@ var Mob = require('./compose/mob.js');
 */
 
 var troop, player;
+var coreyInvader;
 
 var state = {
   // load game assets.
@@ -191,6 +201,7 @@ var state = {
     game.load.spritesheet('invaders', 'media/invaders-80x64.png', 80, 64);
     game.load.spritesheet('player', 'media/player.png', 32, 32);
     game.load.spritesheet('bullet', 'media/bullet.png', 8, 16);
+    game.load.spritesheet('piskelInvader', 'media/piskelInvader.png', 64, 64);
 
     // make repl easier
     window.game = game;
@@ -200,6 +211,15 @@ var state = {
   , create: function(game) {
     var text = 'Class Invaders';
     var style = { font: '65px Arial', fill: '#ff0044', align: 'center' };
+
+    //CoreyInvader.prototype.x = 100;
+
+    coreyInvader = new CoreyInvader(game);
+
+    game.add.existing(coreyInvader);
+
+    coreyInvader.x = 100;
+    coreyInvader.y = 200;
 
     game.add.text(game.world.centerX-200, 0, text, style);
 
@@ -227,6 +247,9 @@ var state = {
       mob.kill();
 			bullet.kill();
     });
+
+    coreyInvader.x += 2;
+
   }
 
   // render any post sprite effects.
@@ -237,4 +260,4 @@ var state = {
 
 /* jshint nonew: false */
 new Phaser.Game(1136, 640, Phaser.AUTO, 'phaser', state);
-},{"./inherit/player.js":3,"./inherit/troop.js":4}]},{},[5]);
+},{"./corey_invader.js":1,"./inherit/player.js":4,"./inherit/troop.js":5}]},{},[6]);

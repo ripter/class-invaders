@@ -4,6 +4,7 @@
 // Inherit version
 var Troop = require('./inherit/troop.js');
 var Player = require('./inherit/player.js');
+var CoreyInvader = require('./corey_invader.js');
 
 /*
 // Compose version
@@ -11,6 +12,7 @@ var Mob = require('./compose/mob.js');
 */
 
 var troop, player;
+var coreyInvader;
 
 var state = {
   // load game assets.
@@ -18,6 +20,7 @@ var state = {
     game.load.spritesheet('invaders', 'media/invaders-80x64.png', 80, 64);
     game.load.spritesheet('player', 'media/player.png', 32, 32);
     game.load.spritesheet('bullet', 'media/bullet.png', 8, 16);
+    game.load.spritesheet('piskelInvader', 'media/piskelInvader.png', 64, 64);
 
     // make repl easier
     window.game = game;
@@ -27,6 +30,15 @@ var state = {
   , create: function(game) {
     var text = 'Class Invaders';
     var style = { font: '65px Arial', fill: '#ff0044', align: 'center' };
+
+    //CoreyInvader.prototype.x = 100;
+
+    coreyInvader = new CoreyInvader(game);
+
+    game.add.existing(coreyInvader);
+
+    coreyInvader.x = 100;
+    coreyInvader.y = 200;
 
     game.add.text(game.world.centerX-200, 0, text, style);
 
@@ -54,6 +66,9 @@ var state = {
       mob.kill();
 			bullet.kill();
     });
+
+    coreyInvader.x += 2;
+
   }
 
   // render any post sprite effects.
