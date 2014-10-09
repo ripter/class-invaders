@@ -19,7 +19,7 @@ Shield.prototype.reset = function(game) {
   var self = this;
 
   var formation = [
-    [0, 6, 12]
+    [0,6,12]
   ];
 
   formation.forEach(function(frames, y) {
@@ -31,10 +31,10 @@ Shield.prototype.reset = function(game) {
         frames: frames
       });
 
-      bunker.x = x * (bunker.width);
-      bunker.y = y * (bunker.height);
-
-      self.add(bunker);
+    bunker.x = x * (bunker.width);
+    bunker.y = y * (bunker.height);
+debugger;
+    self.add(bunker);
    }
   });
 };

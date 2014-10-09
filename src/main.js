@@ -40,31 +40,23 @@ var state = {
       , frames: [0]
     });
     game.add.existing(player);
-    window.player = player;
 
     troop = new Troop(game);
     troop.x = 64;
 	  troop.y = 64;
 
-    window.troop = troop;
-
 	shield = new Shield(game);
 	shield.x = 32;
 	shield.y = 550;
-
-	window.shield = shield;
 
 	shield = new Shield(game);
 	shield.x = 500;
 	shield.y = 550;
 
-	window.shield = shield;
-
 	shield = new Shield(game);
 	shield.x = 1000;
 	shield.y = 550;
 
-	window.shield = shield;
   }
 
   // Game Loop
@@ -74,7 +66,7 @@ var state = {
 
       // kill both!
       mob.kill();
-			bullet.kill();
+      bullet.kill();
     });
   }
 
