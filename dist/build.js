@@ -1,13 +1,4 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-
-function ChrisInvader(game) {
-  Phaser.Sprite.call(this, game, 0, 0, 'chris-invader', [0]);
-}
-ChrisInvader.prototype = Object.create(Phaser.Sprite.prototype);
-ChrisInvader.prototype.constructor = ChrisInvader;
-
-module.exports = ChrisInvader;
-},{}],2:[function(require,module,exports){
 /*global module, Phaser */
 'use strict';
 
@@ -39,7 +30,7 @@ Bullets.prototype.fire = function(x, y) {
 }
 
 module.exports = Bullets;
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 /*global module, Phaser */
 'use strict';
 
@@ -63,7 +54,7 @@ MobInherit.prototype = Object.create(Phaser.Sprite.prototype);
 MobInherit.prototype.constructor = MobInherit;
 
 module.exports = MobInherit;
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 /*global module, require, Phaser */
 'use strict';
 
@@ -129,7 +120,7 @@ Player.prototype.fire = function() {
 }
 
 module.exports = Player;
-},{"./bullets.js":2}],5:[function(require,module,exports){
+},{"./bullets.js":1}],4:[function(require,module,exports){
 /*global module, require, Phaser */
 'use strict';
 
@@ -179,11 +170,11 @@ Troop.prototype.reset = function(game) {
   });
 };
 
-},{"./mob.js":3}],6:[function(require,module,exports){
+},{"./mob.js":2}],5:[function(require,module,exports){
 /* global require, Phaser */
 'use strict';
 
-var ChrisInvader = require('./chris_invader.js');
+var RyancInvader = require('./ryanc_invader.js');
 // Inherit version
 var Troop = require('./inherit/troop.js');
 var Player = require('./inherit/player.js');
@@ -194,7 +185,7 @@ var Mob = require('./compose/mob.js');
 */
 
 var troop, player;
-var chrisInvader;
+var ryancInvader;
 
 var state = {
   // load game assets.
@@ -203,7 +194,7 @@ var state = {
     game.load.spritesheet('player', 'media/player.png', 32, 32);
     game.load.spritesheet('bullet', 'media/bullet.png', 8, 16);
 
-    game.load.spritesheet('chris-invader', 'media/chris_r.png', 64, 64);
+    game.load.spritesheet('ryanc-invader', 'media/chris_r.png', 64, 64);
 
     // make repl easier
     window.game = game;
@@ -216,8 +207,8 @@ var state = {
 
     game.add.text(game.world.centerX-200, 0, text, style);
 
-    chrisInvader = new ChrisInvader(game);
-    game.add.existing(chrisInvader);
+    ryancInvader = new RyancInvader(game);
+    game.add.existing(ryancInvader);
 
 
 
@@ -239,9 +230,6 @@ var state = {
   // Game Loop
   , update: function(game) {
 
-    chrisInvader.x += 2;
-    //chrisInvader.x = chrisInvader.x + 2;
-
     game.physics.arcade.overlap(troop, player.bullets, function(mob, bullet) {
       // kill both!
       mob.kill();
@@ -257,4 +245,33 @@ var state = {
 
 /* jshint nonew: false */
 new Phaser.Game(1136, 640, Phaser.AUTO, 'phaser', state);
-},{"./chris_invader.js":1,"./inherit/player.js":4,"./inherit/troop.js":5}]},{},[6]);
+
+},{"./inherit/player.js":3,"./inherit/troop.js":4,"./ryanc_invader.js":6}],6:[function(require,module,exports){
+
+function RyancInvader(game) {
+  Phaser.Sprite.call(this, game, 0, 0, 'ryanc-invader', [0]);
+  this.forward = true;
+}
+RyancInvader.prototype = Object.create(Phaser.Sprite.prototype);
+RyancInvader.prototype.constructor = RyancInvader;
+
+RyancInvader.prototype.update = function() {
+  var max = game.width - this.width;
+  var speed = 10;
+
+  if (this.forward) {
+    this.x += speed;
+  } else {
+    this.x -= speed;
+  }
+
+  if (this.x >= max) {
+    this.forward = false;
+  } else if (this.x <= 0) {
+    this.forward = true;
+  }
+};
+
+module.exports = RyancInvader;
+
+},{}]},{},[5]);

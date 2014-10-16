@@ -1,7 +1,7 @@
 /* global require, Phaser */
 'use strict';
 
-var ChrisInvader = require('./chris_invader.js');
+var RyancInvader = require('./ryanc_invader.js');
 // Inherit version
 var Troop = require('./inherit/troop.js');
 var Player = require('./inherit/player.js');
@@ -12,7 +12,7 @@ var Mob = require('./compose/mob.js');
 */
 
 var troop, player;
-var chrisInvader;
+var ryancInvader;
 
 var state = {
   // load game assets.
@@ -21,7 +21,7 @@ var state = {
     game.load.spritesheet('player', 'media/player.png', 32, 32);
     game.load.spritesheet('bullet', 'media/bullet.png', 8, 16);
 
-    game.load.spritesheet('chris-invader', 'media/chris_r.png', 64, 64);
+    game.load.spritesheet('ryanc-invader', 'media/chris_r.png', 64, 64);
 
     // make repl easier
     window.game = game;
@@ -34,8 +34,8 @@ var state = {
 
     game.add.text(game.world.centerX-200, 0, text, style);
 
-    chrisInvader = new ChrisInvader(game);
-    game.add.existing(chrisInvader);
+    ryancInvader = new RyancInvader(game);
+    game.add.existing(ryancInvader);
 
 
 
@@ -56,9 +56,6 @@ var state = {
 
   // Game Loop
   , update: function(game) {
-
-    chrisInvader.x += 2;
-    //chrisInvader.x = chrisInvader.x + 2;
 
     game.physics.arcade.overlap(troop, player.bullets, function(mob, bullet) {
       // kill both!
