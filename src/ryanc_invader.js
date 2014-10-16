@@ -7,7 +7,7 @@ RyancInvader.prototype = Object.create(Phaser.Sprite.prototype);
 RyancInvader.prototype.constructor = RyancInvader;
 
 RyancInvader.prototype.update = function() {
-  var max = game.width - this.width;
+  var max = this.game.width - this.width;
   var speed = 10;
 
   if (this.forward) {
